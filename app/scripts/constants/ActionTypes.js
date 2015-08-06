@@ -1,0 +1,2 @@
+export const ATTACH_SAMPLE = 'ATTACH_SAMPLE';
+export const DETACH_SAMPLE = 'DETACH_SAMPLE';
