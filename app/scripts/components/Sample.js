@@ -2,10 +2,8 @@ import React, { Component } from 'react';
 
 export default class Sample extends Component {
 
-	state = {attached: false};
-
 	_onClick = () => {
-		if (!this.state.attached) {
+		if (!this.props.sample.attached) {
 			this.props.attach(this.props.sample.id);
 		}
 		else {
@@ -15,7 +13,7 @@ export default class Sample extends Component {
 
 	render() {
 		return (
-			<div className="samples__sample" onClick={this._onClick}>
+			<div className="samples__sample" style={{backgroundColor: this.props.sample.attached ? '#AAA' : ''}} onClick={this._onClick}>
 				{this.props.sample.title}
 			</div>
 		);

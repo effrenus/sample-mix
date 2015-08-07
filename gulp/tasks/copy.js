@@ -1,9 +1,9 @@
 import gulp from 'gulp';
 
-gulp.task('copy:fonts', () => {
+gulp.task('copy:data', () => {
 	gulp
-		.src('app/fonts/*')
-		.pipe(gulp.dest('dist/fonts'));
+		.src('app/data/*')
+		.pipe(gulp.dest('dist/data'));
 })
 
 gulp.task('copy:js', () => {
@@ -12,4 +12,4 @@ gulp.task('copy:js', () => {
 		.pipe(gulp.dest('dist/scripts/libs'));
 })
 
-gulp.task('copy', ['copy:fonts', 'copy:js']);
+gulp.task('copy', ['copy:data']);

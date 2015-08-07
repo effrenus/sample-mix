@@ -2,19 +2,27 @@
 	margin: 0
 	padding: 0
 
+html
+	height: 100%
+
 body
-	padding: 30px
-	background-color: #EEE
+	min-height: 100%
+	background: linear-gradient(0deg, #8e9eab 0, #eef2f3 100%)
 
 .samples
+	max-width: 1000px
+	margin: 0 auto
+	padding-top: 50px
 
 	&__sample
 		display: inline-block
 		width: 10rem
 		height: 10rem
-		margin-right: 15px
+		margin: 0 15px 30px 0
 		border: 1px solid #aaa
+		border-image: linear-gradient(0deg, #AA076B 0, #61045F 100%) 15% stretch
 		font-size: 2em
 		text-align: center
 		line-height: 10rem
 		cursor: pointer
+		color: #293138

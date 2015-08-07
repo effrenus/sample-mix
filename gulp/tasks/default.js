@@ -16,6 +16,6 @@ gulp.task('build', ['del'], function() {
 		'styles',
 		'jade',
 		'scripts'
-		// 'copy'
+		'copy'
 	);
 });

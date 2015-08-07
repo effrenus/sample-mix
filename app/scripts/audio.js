@@ -1,9 +1,11 @@
+import _ from 'lodash';
 
 class Audio {
 	constructor() {
 		this.ctx = new AudioContext();
 		this.nodes = [];
 		this.buffers = [];
+		this.playing = false;
 	}
 
 	/**
@@ -12,8 +14,9 @@ class Audio {
 	 * @return {promise}
 	 */
 	createNode(arraybuffer) {
-		this.buffers.push({arraybuffer, active: true});
-		return 'id';
+		let id = this.buffers.length + 1;
+		this.buffers.push({id, arraybuffer, active: false});
+		return id;
 	}
 
 	cr(arraybuffer) {
@@ -27,35 +30,31 @@ class Audio {
 		});
 	}
 
-	createNodes() {
+	attachActiveNodes() {
 		let buffers = this.buffers.filter(buffer => buffer.active);
 		return Promise.all(buffers.map(buffer => this.cr(buffer.arraybuffer)));
 	}
 
-	play() {
-		this.createNodes().then(nodes => {
-			nodes.forEach(node => {
-				console.log(node);
-				node.connect(this.ctx.destination);
-				node.start(0);
-			});
+	attachAndPlay(id) {
+		let buffer = _.find(this.buffers, d => d.id === id);
+		buffer.active = true;
+		return this.cr(buffer.arraybuffer).then(source => {
+			let node = {source, id};
+			this.nodes.push(node);
+			source.connect(this.ctx.destination);
+			source.start(0);
 		});
-
-		// let source = activeNodes.shift();
-		// if (activeNodes.length !== 0) {
-		// 	activeNodes.reduce((prev, curr) => {
-		// 		prev.connect(curr);
-		// 		return curr;
-		// 	});
-		// 	source.connect(activeNodes[0]);
-		// 	activeNodes[activeNodes.length - 1].connect(this.ctx.destination);
-		// }
-		// else {
-		// 	source.connect(this.ctx.destination);
-		// }
-		// source.start(0);
 	}
 
+	detach(id) {
+		this.nodes = this.nodes.filter(node => {
+			if (node.id === id) {
+				node.source.disconnect();
+				return false;
+			}
+			return true;
+		});
+	}
 }
 
 export default new Audio();
